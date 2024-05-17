@@ -8,3 +8,7 @@ default: &default
 development:
   <<: *default
   database: mealplanner
+
+test:
+  <<: *default
+  database: mealplanner_test
