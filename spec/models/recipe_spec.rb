@@ -21,4 +21,10 @@ RSpec.describe Recipe do
     it { is_expected.to validate_numericality_of(:prep_time_min).is_greater_than_or_equal_to(0).only_integer.allow_nil }
     it { is_expected.to validate_numericality_of(:cook_time_min).is_greater_than_or_equal_to(0).only_integer.allow_nil }
   end
+
+  describe 'cuisine enum' do
+    it 'is defined' do
+      expect(described_class.cuisines).to be_present
+    end
+  end
 end
