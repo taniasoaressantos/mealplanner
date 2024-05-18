@@ -16,3 +16,6 @@ Style/Documentation:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+RSpec/ExampleLength:
+  Max: 8
