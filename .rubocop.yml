@@ -19,3 +19,6 @@ Style/FrozenStringLiteralComment:
 
 RSpec/ExampleLength:
   Max: 8
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 10
