@@ -35,8 +35,18 @@ describe IngredientParser, type: :service do
     end
 
     context 'when parsing ingredients with fractions' do
-      it 'parses an ingredient with fractional quantities' do
+      it 'parses an ingredient with fractional quantities - format 1/2' do
         expect(described_class.parse('1/2 cup water')).to eq(
+          {
+            quantity: 0.5,
+            unit: 'cup',
+            name: 'water'
+          }
+        )
+      end
+
+      it 'parses an ingredient with fractional quantities - format ½' do
+        expect(described_class.parse('½ cup water')).to eq(
           {
             quantity: 0.5,
             unit: 'cup',
@@ -112,9 +122,15 @@ describe IngredientParser, type: :service do
       end
     end
 
-    context 'when input is not parseable' do
-      it 'returns an error' do
-        expect(described_class.parse('something unparseable')).to include(:error)
+    context 'when parsing ingredients without quantity or unit' do
+      it 'defaults to quantity 1 and unit qb' do
+        expect(described_class.parse('cooking spray')).to eq(
+          {
+            quantity: 1.0,
+            unit: 'qb',
+            name: 'cooking spray'
+          }
+        )
       end
     end
   end
