@@ -16,6 +16,7 @@ class RecipeIngredient < ApplicationRecord
     pinch: 8,
     bunch: 9,
     unit: 10,
-    qb: 11
+    pound: 11,
+    qb: 12
   }
 end

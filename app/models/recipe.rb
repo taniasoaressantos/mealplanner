@@ -1,5 +1,4 @@
 class Recipe < ApplicationRecord
-  mount_uploader :image, ImageUploader
 
   has_many :recipe_ingredients, dependent: :destroy
   has_many :ingredients, through: :recipe_ingredients

@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <h1>Recipe Suggestions</h1>
+
+      <%= form_with url: suggestions_recipes_path, method: :get, local: true, class: 'mb-4' do %>
+        <div class="form-group">
+          <label for="ingredients">Ingredients (comma separated):</label>
+          <input type="text" name="ingredients" id="ingredients" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="limit">Limit:</label>
+          <input type="number" name="limit" id="limit" value="10" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Get Suggestions</button>
+      <% end %>
+
+      <% if @recipes.present? %>
+        <h2>Suggested Recipes</h2>
+        <ul class="list-group mb-4">
+          <% @recipes.each do |recipe| %>
+            <li class="list-group-item">
+              <%= link_to recipe.title, recipe_path(recipe) %> (Matched Ingredients: <%= recipe.match_count %>)
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p>No suggestions found.</p>
+      <% end %>
+    </div>
+
+    <div class="col-md-6">
+      <h1>All Recipes</h1>
+
+      <% if @initial_recipes.present? %>
+        <ul id="recipe-list" class="list-group mb-4">
+          <% @initial_recipes.each do |recipe| %>
+            <li class="list-group-item"><%= link_to recipe.title, recipe_path(recipe) %></li>
+          <% end %>
+        </ul>
+
+        <button id="show-all-recipes" class="btn btn-secondary" onclick="showAllRecipes()">Show All Recipes</button>
+
+        <ul id="all-recipes" class="list-group" style="display: none;">
+          <% @all_recipes.each do |recipe| %>
+            <li class="list-group-item"><%= link_to recipe.title, recipe_path(recipe) %></li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p>No recipes found.</p>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script>
+  function showAllRecipes() {
+    document.getElementById('recipe-list').style.display = 'none';
+    document.getElementById('show-all-recipes').style.display = 'none';
+    document.getElementById('all-recipes').style.display = 'block';
+  }
+</script>

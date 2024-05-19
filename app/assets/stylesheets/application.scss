@@ -1,0 +1,28 @@
+@import "bootstrap";
+
+// Custom styles
+body {
+  padding-top: 1rem;
+  background-color: #f8f9fa;
+}
+
+h1, h2 {
+  margin-bottom: 1rem;
+}
+
+.card-header {
+  background-color: #343a40;
+  color: white;
+}
+
+.card-body {
+  background-color: white;
+}
+
+.btn-primary, .btn-secondary {
+  margin-top: 1rem;
+}
+
+.list-group-item {
+  margin-bottom: 0.5rem;
+}

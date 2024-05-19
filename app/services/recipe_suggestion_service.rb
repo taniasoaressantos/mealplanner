@@ -3,7 +3,7 @@ class RecipeSuggestionService
   # It filters recipes by the number of matching ingredients and returns the top results.
 
   def initialize(ingredient_names, limit = 10)
-    @ingredient_names = ingredient_names.map(&:downcase).map(&:strip)
+    @ingredient_names = ingredient_names.map(&:downcase).map(&:strip).map(&:singularize)
     @limit = limit
   end
 
@@ -20,7 +20,7 @@ class RecipeSuggestionService
   def filter_by_ingredients(recipes)
     subquery = Recipe.joins(:ingredients)
                      .where(ingredients: { name: ingredient_names })
-                     .select('recipes.id, COUNT(ingredients.id) AS match_count')
+                     .select('recipes.id, COUNT(DISTINCT ingredients.id) AS match_count')
                      .group('recipes.id')
 
     recipes.joins("JOIN (#{subquery.to_sql}) AS sub ON recipes.id = sub.id")
