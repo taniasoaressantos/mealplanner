@@ -7,8 +7,12 @@ RUN apt-get update -qq && apt-get install --no-install-recommends -y \
     curl \
     libpq-dev \
     nodejs \
-    yarn \
     && rm -rf /var/lib/apt/lists/*
+
+    # Install Yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+    && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
+    && apt-get update && apt-get install yarn=1.22.5-1
 
 # Set environment variables
 ENV NVM_DIR /root/.nvm
