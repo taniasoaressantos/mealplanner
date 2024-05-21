@@ -135,17 +135,16 @@ Ensure that the JSON file (`recipes-en.json`) is located in `db/seed_data/`.
 Ensure that your application is reliable and bug-free by running the tests:
 
 ```bash
-rails test
+rspec
 ```
 
 ## Future Improvements
 
 - Enhance the extraction of quantities, units, and ingredients from the imported data to ensure better accuracy and consistency.
+- Implement bulk import techniques to speed up the backfilling process and improve performance when importing large datasets.
 - Optimize database queries for better performance.
 - Add user authentication and user-specific recipe suggestions.
 - Add more comprehensive test coverage.
-- Implement pagination for large lists of recipes.
-- Implement caching for frequently accessed data.
 
 ## Contributing
 
