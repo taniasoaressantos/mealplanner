@@ -7,6 +7,7 @@ RUN apt-get update -qq && apt-get install --no-install-recommends -y \
     curl \
     libpq-dev \
     nodejs \
+    gnupg \
     && rm -rf /var/lib/apt/lists/*
 
     # Install Yarn
