@@ -78,6 +78,12 @@ module.exports = function(api) {
         {
           loose: true
         }
+      ],
+      [
+        '@babel/plugin-transform-private-property-in-object',
+        {
+          loose: true
+        }
       ]
     ].filter(Boolean)
   }
