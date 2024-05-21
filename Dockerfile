@@ -47,3 +47,5 @@ EXPOSE 3000
 # Set the entrypoint to the custom script
 ENTRYPOINT ["entrypoint.sh"]
 CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
+
+RUN bundle exec rake assets:precompile
