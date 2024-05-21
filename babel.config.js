@@ -70,3 +70,11 @@ module.exports = function(api) {
     ].filter(Boolean)
   }
 }
+
+module.exports = {
+  presets: ["@babel/preset-env"],
+  plugins: [
+    ["@babel/plugin-transform-private-methods", { "loose": true }],
+    ["@babel/plugin-proposal-private-methods", { "loose": true }]
+  ]
+};
