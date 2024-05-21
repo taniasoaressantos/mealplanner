@@ -1,4 +1,9 @@
 module.exports = {
+  entry: './app/javascript/channels/index.js',
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'public'),
+  },
   plugins: [
     require('postcss-import'),
     require('postcss-flexbugs-fixes'),
