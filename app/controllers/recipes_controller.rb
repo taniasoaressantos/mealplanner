@@ -10,8 +10,14 @@ class RecipesController < ApplicationController
 
   def suggestions
     ingredient_names = params[:ingredients]&.split(',') || []
-    limit = params[:limit] || 10
+    options = {
+      max_cook_time: params[:max_cook_time],
+      max_prep_time: params[:max_prep_time],
+      min_rating: params[:min_rating],
+      limit: params[:limit],
+      sort_by: params[:sort]
+    }
 
-    @recipes = RecipeSuggestionService.new(ingredient_names, limit).perform
+    @recipes = RecipeSuggestionService.new(ingredient_names, options).perform
   end
 end
