@@ -15,7 +15,7 @@ class RecipeSuggestionService
     recipes = filter_by_time(recipes)
     recipes = filter_by_rating(recipes)
     recipes = filter_by_ingredients(recipes)
-    recipes = filter_and_sort(recipes)
+    recipes = sort_results(recipes)
     recipes.limit(limit)
   end
 
@@ -42,14 +42,12 @@ class RecipeSuggestionService
            .distinct
   end
 
-  def filter_and_sort(recipes)
+  def sort_results(recipes)
     case sort_by
     when 'prep_time'
       recipes.order('prep_time_min ASC')
     when 'cook_time'
       recipes.order('cook_time_min ASC')
-    when 'matched_ingredients'
-      recipes.order('match_count DESC')
     else
       recipes.order('rating DESC')
     end
