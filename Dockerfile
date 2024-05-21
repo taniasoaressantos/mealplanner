@@ -31,6 +31,9 @@ COPY Gemfile Gemfile.lock ./
 # Install the dependencies
 RUN gem install bundler -v 2.2.22 && bundle install
 
+# Copy the rest of the application code, including the Rakefile
+COPY . .
+
 # Copy the entrypoint script
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
