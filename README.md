@@ -24,7 +24,7 @@ Meal planner is a Ruby on Rails application that helps users find the most relev
 
 ### Schema
 
-![Screenshot of Meal planner Application](assets/images/db_structure.png)
+![Screenshot of Meal planner Application](app/assets/images/db_structure.png)
 
 ## Getting Started
 
