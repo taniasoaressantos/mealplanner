@@ -7,13 +7,8 @@ RUN apt-get update -qq && apt-get install --no-install-recommends -y \
     curl \
     libpq-dev \
     nodejs \
-    gnupg \
+    gnupg2 \
     && rm -rf /var/lib/apt/lists/*
-
-    # Install Yarn
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-    && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
-    && apt-get update && apt-get install yarn=1.22.5-1
 
 # Set environment variables
 ENV NVM_DIR /root/.nvm
@@ -26,6 +21,11 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | b
     && nvm install $NODE_VERSION \
     && nvm use $NODE_VERSION \
     && nvm alias default $NODE_VERSION
+
+# Install Yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+    apt-get update && apt-get install yarn=1.22.19-1
 
 # Create and set the working directory
 WORKDIR /rails

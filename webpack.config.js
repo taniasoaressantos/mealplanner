@@ -2,23 +2,33 @@ const path = require('path');
 
 module.exports = {
   mode: 'production',
-  entry: './app/javascript/channels/index.js',  // Entry point as per your project structure
+  entry: './app/javascript/packs/application.js',
   output: {
-    filename: 'bundle.js',                    // Output file
-    path: path.resolve(__dirname, 'public'),  // Output directory
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'public/packs/js'),
   },
   module: {
     rules: [
       {
-        test: /\.js$/,                        // Transformation rule for JavaScript files
+        test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',             // Using babel-loader for transpiling
-          options: {
-            presets: ['@babel/preset-env']    // Preset used for transpiling ES6 and above
-          }
-        }
-      }
-    ]
-  }
+          loader: 'babel-loader',
+        },
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+    ],
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
+  // Correctly configuring node
+  node: {
+    __dirname: true,
+    __filename: true,
+    global: true,
+  },
 };
