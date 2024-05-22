@@ -42,7 +42,7 @@ RUN chmod +x /usr/bin/entrypoint.sh
 # Install yarn packages
 RUN yarn install --check-files
 
-# Install webpack-cli globally
+# Install webpack-cli as a global dependency to ensure it's available
 RUN yarn global add webpack-cli
 
 # Accept SECRET_KEY_BASE as a build argument
