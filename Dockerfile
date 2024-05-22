@@ -1,39 +1,34 @@
-# Use the official Ruby image as a base image
+# Use a Ruby base image
 FROM ruby:2.7.7-slim
 
-# Install dependencies
+# Install required packages and dependencies
 RUN apt-get update -qq && apt-get install --no-install-recommends -y \
-    build-essential \
-    curl \
-    libpq-dev \
-    nodejs \
-    gnupg2 \
-    && rm -rf /var/lib/apt/lists/*
+  build-essential \
+  curl \
+  libpq-dev \
+  nodejs \
+  gnupg2 \
+  && rm -rf /var/lib/apt/lists/*
 
-# Set environment variables
-ENV NVM_DIR /root/.nvm
-ENV NODE_VERSION 18.20.3
-ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
-
-# Install Node.js via nvm (Node Version Manager)
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash \
-    && . $NVM_DIR/nvm.sh \
-    && nvm install $NODE_VERSION \
-    && nvm use $NODE_VERSION \
-    && nvm alias default $NODE_VERSION
+# Install Node.js
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
+RUN apt-get install -y nodejs
 
 # Install Yarn
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
-    apt-get update && apt-get install yarn=1.22.19-1
+    apt-get update && apt-get install yarn
 
-# Create and set the working directory
+# Set environment variables
+ENV RAILS_ENV=production
+
+# Set the working directory
 WORKDIR /rails
 
 # Copy the Gemfile and Gemfile.lock
 COPY Gemfile Gemfile.lock ./
 
-# Install the dependencies
+# Install gems
 RUN gem install bundler -v 2.2.22 && bundle install
 
 # Copy the rest of the application code, including the Rakefile
@@ -43,14 +38,18 @@ COPY . .
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 
-# Ensure the correct working directory
-WORKDIR /rails
+# Ensure yarn install runs
+RUN yarn install --check-files
 
-# Expose the port that the app runs on
+# Accept SECRET_KEY_BASE as a build argument
+ARG SECRET_KEY_BASE
+
+# Precompile assets using the provided SECRET_KEY_BASE
+RUN SECRET_KEY_BASE=$SECRET_KEY_BASE bundle exec rake assets:precompile
+
+# Expose the application port
 EXPOSE 3000
 
-# Set the entrypoint to the custom script
+# Start the main process
 ENTRYPOINT ["entrypoint.sh"]
 CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
-
-RUN bundle exec rake assets:precompile
