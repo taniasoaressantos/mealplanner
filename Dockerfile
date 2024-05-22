@@ -42,13 +42,11 @@ RUN chmod +x /usr/bin/entrypoint.sh
 # Install yarn packages
 RUN yarn install --check-files
 
-# Install webpack-cli as a global dependency to ensure it's available
-RUN yarn global add webpack-cli
-
-# Accept SECRET_KEY_BASE as a build argument
-ARG SECRET_KEY_BASE
+# Ensure webpack-cli is installed
+RUN yarn add webpack-cli
 
 # Precompile assets using the provided SECRET_KEY_BASE
+ARG SECRET_KEY_BASE
 RUN SECRET_KEY_BASE=${SECRET_KEY_BASE} bundle exec rake assets:precompile
 
 # Expose the application port
