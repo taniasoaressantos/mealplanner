@@ -25,15 +25,6 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
   },
-  // Correctly configuring node
-  node: {
-    __dirname: true,
-    __filename: true,
-    global: true,
-    tls: 'empty',
-    net: 'empty',
-    fs: 'empty',
-    dgram: 'empty',
-    child_process: 'empty',
-  },
+  // Removing unnecessary node configuration
+  node: false,
 };
