@@ -30,5 +30,10 @@ module.exports = {
     __dirname: true,
     __filename: true,
     global: true,
+    tls: 'empty',
+    net: 'empty',
+    fs: 'empty',
+    dgram: 'empty',
+    child_process: 'empty',
   },
 };
