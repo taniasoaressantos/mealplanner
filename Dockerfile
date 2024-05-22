@@ -44,6 +44,9 @@ RUN yarn install --check-files
 # Accept SECRET_KEY_BASE as a build argument
 ARG SECRET_KEY_BASE
 
+# Accept SECRET_KEY_BASE as a build argument
+ARG SECRET_KEY_BASE
+
 # Precompile assets using the provided SECRET_KEY_BASE
 RUN SECRET_KEY_BASE=$SECRET_KEY_BASE bundle exec rake assets:precompile
 
