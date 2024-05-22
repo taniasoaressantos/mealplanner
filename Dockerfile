@@ -21,6 +21,7 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
 
 # Set environment variables
 ENV RAILS_ENV=production
+ENV NODE_ENV=production
 
 # Set the working directory
 WORKDIR /rails
@@ -38,11 +39,11 @@ COPY . .
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 
-# Ensure yarn install runs
+# Install yarn packages
 RUN yarn install --check-files
 
-# Install webpack-cli
-RUN yarn add -D webpack-cli
+# Install webpack-cli globally
+RUN yarn global add webpack-cli
 
 # Accept SECRET_KEY_BASE as a build argument
 ARG SECRET_KEY_BASE
