@@ -41,14 +41,14 @@ RUN chmod +x /usr/bin/entrypoint.sh
 # Ensure yarn install runs
 RUN yarn install --check-files
 
-# Accept SECRET_KEY_BASE as a build argument
-ARG SECRET_KEY_BASE
+# Install webpack-cli
+RUN yarn add -D webpack-cli
 
 # Accept SECRET_KEY_BASE as a build argument
 ARG SECRET_KEY_BASE
 
 # Precompile assets using the provided SECRET_KEY_BASE
-RUN SECRET_KEY_BASE=$SECRET_KEY_BASE bundle exec rake assets:precompile
+RUN SECRET_KEY_BASE=${SECRET_KEY_BASE} bundle exec rake assets:precompile
 
 # Expose the application port
 EXPOSE 3000
